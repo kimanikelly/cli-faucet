@@ -34,7 +34,7 @@ func main() {
 					// Returns the amount as a wei value ne18
 					fetchFundAmount, err := token.FundAmount(&bind.CallOpts{})
 
-					// Converts the amount from wei to
+					// Converts the amount from wei to a decimal
 					fundAmount := ethutil.ToDecimal(fetchFundAmount, 18)
 
 					if err != nil {
@@ -53,7 +53,9 @@ func main() {
 				Usage: "View the amount of Test Tokens Token.sol holds in the contract",
 				Action: func(c *cli.Context) error {
 
-					contractBalance, err := token.BalanceOf(&bind.CallOpts{}, common.HexToAddress(contract.TokenAddress))
+					fetchContractBalance, err := token.BalanceOf(&bind.CallOpts{}, common.HexToAddress(contract.TokenAddress))
+
+					contractBalance := ethutil.ToDecimal(fetchContractBalance, 18)
 
 					if err != nil {
 						log.Fatalf("Failed to return the contract balance %v", err)
@@ -81,6 +83,20 @@ func main() {
 					g := fmt.Sprintf("The balance of %v is: %v %v", s, balance, tokenSymbol)
 
 					fmt.Println(g)
+					return nil
+				},
+			},
+			{
+				Name:  "FundAccount",
+				Usage: "Transfers the FundAmount from the contract to the connected wallet",
+				Action: func(c *cli.Context) error {
+
+					fundAccount, err := token.FundAccount(&bind.TransactOpts{})
+
+					if err != nil {
+						log.Fatalf("Failed to fund the connected wallet %v", err)
+					}
+					fmt.Println(fundAccount)
 					return nil
 				},
 			},
