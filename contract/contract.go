@@ -34,7 +34,7 @@ func ContractInstance() *Token {
 	// If err does not equal nil(zero value) throw an error and exit the process
 	// The "Failed to load the .env file" message will only log if there is an error loading the .env file
 	if err != nil {
-		log.Fatalf("Failed to load the .env file")
+		log.Fatalf("Failed to load the .env file %v", err)
 	}
 
 	// what is io?
