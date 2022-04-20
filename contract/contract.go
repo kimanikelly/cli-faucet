@@ -4,10 +4,10 @@ import (
 	"encoding/json"
 	"io"
 	"log"
-	"os"
+
+	// "os"
 
 	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/joho/godotenv"
 )
 
@@ -57,10 +57,7 @@ func ContractInstance() *Token {
 	TokenAddress = ContractData.Addresses.Rinkeby
 
 	// rinkebyUrl is assigned the value of the RINKEBY_URL environment variable
-	rinkebyUrl := os.Getenv("RINKEBY_URL")
-
-	// Connects the client to the Ethereum provider
-	conn, err := ethclient.Dial(rinkebyUrl)
+	// rinkebyUrl := os.Getenv("RINKEBY_URL")
 
 	// If err does not equal nil(zero value) throw an error and exit the process
 	// The "Failed to connect to the Ethereum client: %v" will only log if there is an error
@@ -69,7 +66,7 @@ func ContractInstance() *Token {
 		log.Fatalf("Failed to connect to the Ethereum client: %v", err)
 	}
 
-	token, err := NewToken(common.HexToAddress(TokenAddress), conn)
+	token, err := NewToken(common.HexToAddress("0x0DCd1Bf9A1b36cE34237eEaFef220932846BCD82"), Connection())
 
 	if err != nil {
 		log.Fatalf("Failed to instantiate a Token contract: %v", err)

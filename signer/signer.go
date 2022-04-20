@@ -10,7 +10,7 @@ import (
 	"github.com/ethereum/go-ethereum/crypto"
 )
 
-func Testing() string {
+func Address() string {
 
 	err := godotenv.Load()
 
