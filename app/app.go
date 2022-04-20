@@ -95,7 +95,7 @@ func StartApp() {
 					// Converts the amount from wei to a decimal
 					contractBalance := ethutil.ToDecimal(fetchContractBalance, 18)
 
-					contractBalMessage := fmt.Sprintf("The contract balance is: %v %v", contractBalance, tokenSymbol)
+					contractBalMessage := fmt.Sprintf("The TT contract balance is: %v %v", contractBalance, tokenSymbol)
 
 					fmt.Println(contractBalMessage)
 
@@ -117,7 +117,7 @@ func StartApp() {
 
 					balance := ethutil.ToDecimal(fetchBalance, 18)
 
-					balanceMessage := fmt.Sprintf("The balance of %v is: %v %v", address, balance, tokenSymbol)
+					balanceMessage := fmt.Sprintf("The TT balance of %v is: %v %v", address, balance, tokenSymbol)
 
 					fmt.Println(balanceMessage)
 
@@ -128,14 +128,20 @@ func StartApp() {
 				Name:  "EthBalanceOf",
 				Usage: "View the amount of Rinkeby ETH a public address holds in their wallet",
 				Action: func(c *cli.Context) error {
-					fetchBalance, err := contract.Connection().BalanceAt(context.Background(), signerAddress, nil)
+
+					address := c.Args().First()
+
+					fetchBalance, err := contract.Connection().BalanceAt(context.Background(), common.HexToAddress(address), nil)
 
 					if err != nil {
 						log.Fatalf("Failed to return the balance %v %v", fetchBalance, err)
 					}
+
 					balance := ethutil.ToDecimal(fetchBalance, 18)
 
-					fmt.Println(balance)
+					balanceMessage := fmt.Sprintf("The ETH balance of %v is: %v %v", address, balance, "ETH")
+
+					fmt.Println(balanceMessage)
 					return nil
 				},
 			},
@@ -150,18 +156,19 @@ func StartApp() {
 						log.Fatalf("Failed to fund the connected wallet %v", err)
 					}
 
-					type Test struct {
-						amounFunded big.Int
-						hash        string
+					fetchAmountFunded, err := token.FundAmount(&bind.CallOpts{})
+
+					if err != nil {
+						log.Fatalf("Failed to get the fundAmount %v", err)
 					}
 
-					var test Test
+					amountFunded := ethutil.ToDecimal(fetchAmountFunded, 18)
 
-					test.hash = fundAccount.Hash().Hex()
+					txAmount := fmt.Sprintf("%v was funded: %v %v", signerAddress, amountFunded, tokenSymbol)
+					txHash := fmt.Sprintf("https://rinkeby.etherscan.io/tx/%s", fundAccount.Hash())
 
-					txHash := fmt.Sprintf("https://rinkeby.etherscan.io/tx/%s", test.hash)
-
-					fmt.Println(txHash)
+					fmt.Println(txAmount)
+					fmt.Print("\nEtherscan Transaction Hash: ", txHash)
 
 					return nil
 				},
