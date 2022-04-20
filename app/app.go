@@ -125,6 +125,21 @@ func StartApp() {
 				},
 			},
 			{
+				Name:  "EthBalanceOf",
+				Usage: "View the amount of Rinkeby ETH a public address holds in their wallet",
+				Action: func(c *cli.Context) error {
+					fetchBalance, err := contract.Connection().BalanceAt(context.Background(), signerAddress, nil)
+
+					if err != nil {
+						log.Fatalf("Failed to return the balance %v %v", fetchBalance, err)
+					}
+					balance := ethutil.ToDecimal(fetchBalance, 18)
+
+					fmt.Println(balance)
+					return nil
+				},
+			},
+			{
 				Name:  "FundAccount",
 				Usage: "Transfers the FundAmount from the contract to the connected wallet",
 				Action: func(c *cli.Context) error {
@@ -135,7 +150,18 @@ func StartApp() {
 						log.Fatalf("Failed to fund the connected wallet %v", err)
 					}
 
-					fmt.Println(fundAccount)
+					type Test struct {
+						amounFunded big.Int
+						hash        string
+					}
+
+					var test Test
+
+					test.hash = fundAccount.Hash().Hex()
+
+					txHash := fmt.Sprintf("https://rinkeby.etherscan.io/tx/%s", test.hash)
+
+					fmt.Println(txHash)
 
 					return nil
 				},
