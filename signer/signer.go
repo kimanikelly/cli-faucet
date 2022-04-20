@@ -7,10 +7,11 @@ import (
 
 	"github.com/joho/godotenv"
 
+	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
 )
 
-func Address() string {
+func Address() (common.Address, *ecdsa.PrivateKey) {
 
 	err := godotenv.Load()
 
@@ -34,5 +35,5 @@ func Address() string {
 
 	signerAddress := crypto.PubkeyToAddress(*publicKeyECDSA)
 
-	return signerAddress.Hex()
+	return signerAddress, privateKey
 }

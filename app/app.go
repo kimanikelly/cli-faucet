@@ -3,8 +3,10 @@ package app
 import (
 	"cli-faucet/contract"
 	"cli-faucet/signer"
+	"context"
 	"fmt"
 	"log"
+	"math/big"
 	"os"
 
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
@@ -27,7 +29,26 @@ func StartApp() {
 	}
 
 	// The address of the connected signer account
-	signerAddress := signer.Address()
+	signerAddress, privateKey := signer.Address()
+
+	nonce, nonceErr := contract.Connection().PendingNonceAt(context.Background(), signerAddress)
+
+	if nonceErr != nil {
+		log.Fatal(nonceErr)
+	}
+
+	gasPrice, gasErr := contract.Connection().SuggestGasPrice(context.Background())
+
+	if gasErr != nil {
+		log.Fatal(gasErr)
+	}
+
+	auth := bind.NewKeyedTransactor(privateKey)
+
+	auth.Nonce = big.NewInt(int64(nonce))
+	auth.Value = big.NewInt(0)
+	auth.GasLimit = uint64(300000) // in units
+	auth.GasPrice = gasPrice
 
 	app := &cli.App{
 		Commands: []*cli.Command{
@@ -108,7 +129,7 @@ func StartApp() {
 				Usage: "Transfers the FundAmount from the contract to the connected wallet",
 				Action: func(c *cli.Context) error {
 
-					fundAccount, err := token.FundAccount(&bind.TransactOpts{From: common.HexToAddress(signerAddress)})
+					fundAccount, err := token.FundAccount(auth)
 
 					if err != nil {
 						log.Fatalf("Failed to fund the connected wallet %v", err)
