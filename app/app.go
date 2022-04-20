@@ -109,18 +109,21 @@ func StartApp() {
 
 					address := c.Args().First()
 
-					fetchBalance, err := token.BalanceOf(&bind.CallOpts{}, common.HexToAddress(address))
+					if address == "" {
+						fmt.Println("BalanceOf Error: The address cannot be empty")
+					} else {
+						fetchBalance, err := token.BalanceOf(&bind.CallOpts{}, common.HexToAddress(address))
 
-					if err != nil {
-						log.Fatalf("Failed to return the balance %v %v", fetchBalance, err)
+						if err != nil {
+							log.Fatalf("Failed to return the balance %v %v", fetchBalance, err)
+						}
+
+						balance := ethutil.ToDecimal(fetchBalance, 18)
+
+						balanceMessage := fmt.Sprintf("The TT balance of %v is: %v %v", address, balance, tokenSymbol)
+
+						fmt.Println(balanceMessage)
 					}
-
-					balance := ethutil.ToDecimal(fetchBalance, 18)
-
-					balanceMessage := fmt.Sprintf("The TT balance of %v is: %v %v", address, balance, tokenSymbol)
-
-					fmt.Println(balanceMessage)
-
 					return nil
 				},
 			},
@@ -131,17 +134,22 @@ func StartApp() {
 
 					address := c.Args().First()
 
-					fetchBalance, err := contract.Connection().BalanceAt(context.Background(), common.HexToAddress(address), nil)
+					if address == "" {
+						fmt.Println("EthBalanceOf Error: The address cannot be empty")
+					} else {
 
-					if err != nil {
-						log.Fatalf("Failed to return the balance %v %v", fetchBalance, err)
+						fetchBalance, err := contract.Connection().BalanceAt(context.Background(), common.HexToAddress(address), nil)
+
+						if err != nil {
+							log.Fatalf("Failed to return the balance %v %v", fetchBalance, err)
+						}
+
+						balance := ethutil.ToDecimal(fetchBalance, 18)
+
+						balanceMessage := fmt.Sprintf("The ETH balance of %v is: %v %v", address, balance, "ETH")
+
+						fmt.Println(balanceMessage)
 					}
-
-					balance := ethutil.ToDecimal(fetchBalance, 18)
-
-					balanceMessage := fmt.Sprintf("The ETH balance of %v is: %v %v", address, balance, "ETH")
-
-					fmt.Println(balanceMessage)
 					return nil
 				},
 			},
