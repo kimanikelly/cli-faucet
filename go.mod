@@ -4,13 +4,13 @@ go 1.18
 
 require (
 	github.com/ethereum/go-ethereum v1.10.17
+	github.com/go-sql-driver/mysql v1.6.0
 	github.com/miguelmota/go-ethutil v0.0.0-20211107025933-8f19054700cb
 	github.com/urfave/cli/v2 v2.4.0
 )
 
 require (
 	github.com/cpuguy83/go-md2man/v2 v2.0.1 // indirect
-	github.com/go-sql-driver/mysql v1.6.0 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/shopspring/decimal v1.3.1 // indirect
 )

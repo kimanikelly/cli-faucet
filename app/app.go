@@ -2,6 +2,7 @@ package app
 
 import (
 	"cli-faucet/contract"
+	"cli-faucet/database"
 	"cli-faucet/signer"
 	"context"
 	"fmt"
@@ -172,11 +173,26 @@ func StartApp() {
 
 					amountFunded := ethutil.ToDecimal(fetchAmountFunded, 18)
 
-					txAmount := fmt.Sprintf("%v was funded: %v %v", signerAddress, amountFunded, tokenSymbol)
+					// Builds the string for
+					insertFundAccountStr := fmt.Sprintf(
+						"INSERT INTO recipients VALUES ('%v', %v, CURRENT_TIMESTAMP())", signerAddress, amountFunded)
+
+					//
+					insertFundAccount, err := database.Connection().Query(insertFundAccountStr)
+
+					if err != nil {
+						log.Fatalf("Failed to insert %v", err)
+					}
+
+					//
+					amountFundedMessage := fmt.Sprintf("%v was funded: %v %v", signerAddress, amountFunded, tokenSymbol)
 					txHash := fmt.Sprintf("https://rinkeby.etherscan.io/tx/%s", fundAccount.Hash())
 
-					fmt.Println(txAmount)
-					fmt.Print("\nEtherscan Transaction Hash: ", txHash)
+					fmt.Println(amountFundedMessage)
+
+					fmt.Println("\nTransaction Hash:", txHash)
+
+					defer insertFundAccount.Close()
 
 					return nil
 				},
