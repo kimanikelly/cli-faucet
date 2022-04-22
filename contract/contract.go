@@ -11,7 +11,7 @@ import (
 	"github.com/joho/godotenv"
 )
 
-// Stores the UnMarshalled addresse of Token.sol
+// Stores the UnMarshalled address of Token.sol
 type AddressList struct {
 	Rinkeby string
 }
@@ -23,7 +23,7 @@ type ContractResponseData struct {
 //
 var ContractData ContractResponseData
 
-// Declaring
+// The deployed Token.sol address on the Rinkeby testnet
 var TokenAddress string
 
 func ContractInstance() *Token {
