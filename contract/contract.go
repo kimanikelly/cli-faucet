@@ -45,8 +45,6 @@ func ContractInstance() *Token {
 	body, err := io.ReadAll(fetchContractData().Body)
 
 	// If err does not equal nil(zero value) throw an error and exit the process
-	// The "Failed to read the response body %v" will only log if there is an error reading the
-	// response body returned from fetchContractData().Body
 	if err != nil {
 		log.Fatalf("Failed to read the response body %v", err)
 	}
@@ -60,8 +58,6 @@ func ContractInstance() *Token {
 	// rinkebyUrl := os.Getenv("RINKEBY_URL")
 
 	// If err does not equal nil(zero value) throw an error and exit the process
-	// The "Failed to connect to the Ethereum client: %v" will only log if there is an error
-	// connecting to the Ethereum provider
 	if err != nil {
 		log.Fatalf("Failed to connect to the Ethereum client: %v", err)
 	}

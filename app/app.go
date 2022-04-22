@@ -159,39 +159,50 @@ func StartApp() {
 				Usage: "Transfers the FundAmount from the contract to the connected wallet",
 				Action: func(c *cli.Context) error {
 
+					// Transfers the Token.sol FundAmount to the connected signer
 					fundAccount, err := token.FundAccount(auth)
 
+					// If err does not equal nil(zero value) throw an error
 					if err != nil {
 						log.Fatalf("Failed to fund the connected wallet %v", err)
 					}
 
+					// Returns the Token.sol FundAmount as a wei value
 					fetchAmountFunded, err := token.FundAmount(&bind.CallOpts{})
 
+					// If err does not equal nil(zero value) throw an error
 					if err != nil {
 						log.Fatalf("Failed to get the fundAmount %v", err)
 					}
 
+					// Converts the returned FundAmount from a wei value to an ETH value
 					amountFunded := ethutil.ToDecimal(fetchAmountFunded, 18)
 
-					// Builds the string for
+					// Builds the string to insert the FundAccount transaction values into the recipients MySQL table
 					insertFundAccountStr := fmt.Sprintf(
 						"INSERT INTO recipients VALUES ('%v', %v, CURRENT_TIMESTAMP())", signerAddress, amountFunded)
 
-					//
+					// Inserts the FundAccount transaction values into the recipients MySQL table
 					insertFundAccount, err := database.Connection().Query(insertFundAccountStr)
 
+					// If err does not equal nil(zero value) throw an error
 					if err != nil {
-						log.Fatalf("Failed to insert %v", err)
+						log.Fatalf("Failed to insert the FundAccount transaction values into the recipients MySQL table %v", err)
 					}
 
-					//
+					// Message logs the connected signers address and how many Test Tokens were transferred
 					amountFundedMessage := fmt.Sprintf("%v was funded: %v %v", signerAddress, amountFunded, tokenSymbol)
+
+					// Etherscan Rinkeby transaction hash
 					txHash := fmt.Sprintf("https://rinkeby.etherscan.io/tx/%s", fundAccount.Hash())
 
+					// Prints the message to the CLI when the transaction is successful
 					fmt.Println(amountFundedMessage)
 
+					// Prints the etherscan hash to the CLI when the transaction is successful
 					fmt.Println("\nTransaction Hash:", txHash)
 
+					// Closes the recipients table at the end of the FundAccount CLI command
 					defer insertFundAccount.Close()
 
 					return nil
