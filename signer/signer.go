@@ -11,7 +11,7 @@ import (
 	"github.com/ethereum/go-ethereum/crypto"
 )
 
-func Address() (common.Address, *ecdsa.PrivateKey) {
+func Account() (common.Address, *ecdsa.PrivateKey) {
 
 	err := godotenv.Load()
 

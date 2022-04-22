@@ -30,7 +30,7 @@ func StartApp() {
 	}
 
 	// The address of the connected signer account
-	signerAddress, privateKey := signer.Address()
+	signerAddress, privateKey := signer.Account()
 
 	nonce, nonceErr := contract.Connection().PendingNonceAt(context.Background(), signerAddress)
 
