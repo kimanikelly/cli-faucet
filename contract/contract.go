@@ -26,9 +26,9 @@ var ContractData ContractResponseData
 // The deployed Token.sol address on the Rinkeby testnet
 var TokenAddress string
 
+// Creates and returns the Token.sol contract instance
 func ContractInstance() *Token {
 
-	//
 	err := godotenv.Load()
 
 	// If err does not equal nil(zero value) throw an error and exit the process
@@ -62,11 +62,14 @@ func ContractInstance() *Token {
 		log.Fatalf("Failed to connect to the Ethereum client: %v", err)
 	}
 
+	// Creates the Token.sol contract instance
 	token, err := NewToken(common.HexToAddress("0x0DCd1Bf9A1b36cE34237eEaFef220932846BCD82"), ProviderConnection())
 
+	// If err does not equal nil(zero value) throw an error and exit the process
 	if err != nil {
 		log.Fatalf("Failed to instantiate a Token contract: %v", err)
 	}
 
+	// Returns the Token.sol contract instance
 	return token
 }
