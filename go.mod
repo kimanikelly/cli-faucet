@@ -6,13 +6,17 @@ require (
 	github.com/ethereum/go-ethereum v1.10.17
 	github.com/go-sql-driver/mysql v1.6.0
 	github.com/miguelmota/go-ethutil v0.0.0-20211107025933-8f19054700cb
+	github.com/stretchr/testify v1.7.1
 	github.com/urfave/cli/v2 v2.4.0
 )
 
 require (
 	github.com/cpuguy83/go-md2man/v2 v2.0.1 // indirect
+	github.com/davecgh/go-spew v1.1.1 // indirect
+	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/shopspring/decimal v1.3.1 // indirect
+	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect
 )
 
 require (
