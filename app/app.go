@@ -16,6 +16,7 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
+// Starts the CLI Faucet
 func StartApp() {
 
 	// Returns the Token.sol contract instance
@@ -29,27 +30,52 @@ func StartApp() {
 		log.Fatalf("Failed to return the Symbol %v", symbolErr)
 	}
 
-	// The address and private key of the connectd signer
+	// Returns the address and private key of the connected signer
 	signerAddress, privateKey := signer.Account()
 
-	//
+	// Returns the number of transactions the connected signer sent overtime
+	// The nonce can only be used once per transaction and increments by 1 per transaction
 	nonce, nonceErr := contract.ProviderConnection().PendingNonceAt(context.Background(), signerAddress)
 
+	// If nonceErr does not equal nil(zero value) throw an error
 	if nonceErr != nil {
 		log.Fatal(nonceErr)
 	}
 
+	// Estimates the cost needed to perform a transaction
 	gasPrice, gasErr := contract.ProviderConnection().SuggestGasPrice(context.Background())
 
+	// If gasErr does not equal nil(zero value) throw an error
 	if gasErr != nil {
 		log.Fatal(gasErr)
 	}
 
-	auth := bind.NewKeyedTransactor(privateKey)
+	// Returns the chainID of the connected provider
+	chainID, chainIdErr := contract.ProviderConnection().ChainID(context.Background())
 
+	// If chainIdErr does not equal nil(zero value) throw an error
+	if chainIdErr != nil {
+		log.Fatalf("Failed to return the chainID %v", chainIdErr)
+	}
+
+	// Binds the connected signer to the transaction options
+	auth, authErr := bind.NewKeyedTransactorWithChainID(privateKey, chainID)
+
+	// If authErr does not equal nil (zero value) throw an error
+	if authErr != nil {
+		log.Fatalf("Failed to build the NewKeyedTransactorWithChainID %v", authErr)
+	}
+
+	// Sets the nonce to send with a transaction
 	auth.Nonce = big.NewInt(int64(nonce))
+
+	// Sets the amount of test ETH to send with a transaction
 	auth.Value = big.NewInt(0)
+
+	// Sets the gasLimit for a transaction
 	auth.GasLimit = uint64(300000)
+
+	// Sets the gas price for a transaction
 	auth.GasPrice = gasPrice
 
 	app := &cli.App{
