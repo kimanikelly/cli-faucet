@@ -29,16 +29,17 @@ func StartApp() {
 		log.Fatalf("Failed to return the Symbol %v", symbolErr)
 	}
 
-	// The address of the connected signer account
+	// The address and private key of the connectd signer
 	signerAddress, privateKey := signer.Account()
 
-	nonce, nonceErr := contract.Connection().PendingNonceAt(context.Background(), signerAddress)
+	//
+	nonce, nonceErr := contract.ProviderConnection().PendingNonceAt(context.Background(), signerAddress)
 
 	if nonceErr != nil {
 		log.Fatal(nonceErr)
 	}
 
-	gasPrice, gasErr := contract.Connection().SuggestGasPrice(context.Background())
+	gasPrice, gasErr := contract.ProviderConnection().SuggestGasPrice(context.Background())
 
 	if gasErr != nil {
 		log.Fatal(gasErr)
@@ -48,7 +49,7 @@ func StartApp() {
 
 	auth.Nonce = big.NewInt(int64(nonce))
 	auth.Value = big.NewInt(0)
-	auth.GasLimit = uint64(300000) // in units
+	auth.GasLimit = uint64(300000)
 	auth.GasPrice = gasPrice
 
 	app := &cli.App{
@@ -68,13 +69,13 @@ func StartApp() {
 					}
 
 					// Converts the amount from wei to a decimal
+					// From Ne18 to N.0
 					fundAmount := ethutil.ToDecimal(fetchFundAmount, 18)
 
-					// Uses the fundAmount and tokenSymbol variable to format the message
-					// The fund amount is: N TT as a string
+					// Buils the fund amount message as a string by taking in fundAmount and tokenSymbol as args
 					fundAmtMessage := fmt.Sprintf("The fund amount is: %v %v ", fundAmount, tokenSymbol)
 
-					// Prints the message to the cli
+					// Prints the fundAmount message
 					fmt.Println(fundAmtMessage)
 
 					return nil
@@ -89,15 +90,19 @@ func StartApp() {
 					// Returns the amount as a wei value Ne18
 					fetchContractBalance, err := token.BalanceOf(&bind.CallOpts{}, common.HexToAddress("0x0DCd1Bf9A1b36cE34237eEaFef220932846BCD82"))
 
+					// If err does not equal nil(zero value) throw an error
 					if err != nil {
 						log.Fatalf("Failed to return the contract balance %v", err)
 					}
 
 					// Converts the amount from wei to a decimal
+					// From Ne18 to N.0
 					contractBalance := ethutil.ToDecimal(fetchContractBalance, 18)
 
+					// Builds the contract balance message as a string by taking in the contractBalance and tokenSymbol as args
 					contractBalMessage := fmt.Sprintf("The TT contract balance is: %v %v", contractBalance, tokenSymbol)
 
+					// Prints the contract balance message
 					fmt.Println(contractBalMessage)
 
 					return nil
@@ -108,23 +113,37 @@ func StartApp() {
 				Usage: "View the amount of Test Tokens a public address holds in their wallet",
 				Action: func(c *cli.Context) error {
 
+					// Stores the address to user inputs in the cli
 					address := c.Args().First()
 
+					// Checks if the address is an empty string
 					if address == "" {
-						fmt.Println("BalanceOf Error: The address cannot be empty")
+
+						// Throws an error if the address is an empty string
+						log.Fatalf("BalanceOf Error: The address cannot be empty")
+
 					} else {
+
+						// Returns the amount of Test Tokens an address holds in their wallet
+						// Returns the amount as a wei value Ne18
 						fetchBalance, err := token.BalanceOf(&bind.CallOpts{}, common.HexToAddress(address))
 
+						// If err does not equal nil(zero value)
 						if err != nil {
 							log.Fatalf("Failed to return the balance %v %v", fetchBalance, err)
 						}
 
-						balance := ethutil.ToDecimal(fetchBalance, 18)
+						// Converts the amount from wei to a decimal
+						// From Ne18 to N.0
+						testTokenBalance := ethutil.ToDecimal(fetchBalance, 18)
 
-						balanceMessage := fmt.Sprintf("The TT balance of %v is: %v %v", address, balance, tokenSymbol)
+						// Builds the balance message as a string by taking in the address, testTokenBalance, and tokenSymbol as args
+						balanceMessage := fmt.Sprintf("The TT balance of %v is: %v %v", address, testTokenBalance, tokenSymbol)
 
+						// Prints the balance message
 						fmt.Println(balanceMessage)
 					}
+
 					return nil
 				},
 			},
@@ -133,24 +152,36 @@ func StartApp() {
 				Usage: "View the amount of Rinkeby ETH a public address holds in their wallet",
 				Action: func(c *cli.Context) error {
 
+					// Stores the address to user inputs in the cli
 					address := c.Args().First()
 
+					// Checks if the address is an empty string
 					if address == "" {
-						fmt.Println("EthBalanceOf Error: The address cannot be empty")
+
+						// Throws an error if the address is an empty string
+						log.Fatalf("EthBalanceOf Error: The address cannot be empty")
+
 					} else {
 
-						fetchBalance, err := contract.Connection().BalanceAt(context.Background(), common.HexToAddress(address), nil)
+						// Returns the amount of testnet ETH an address holds in their wallet
+						fetchBalance, err := contract.ProviderConnection().BalanceAt(context.Background(), common.HexToAddress(address), nil)
 
+						// If err does not equal nil(zero value) throw an error
 						if err != nil {
 							log.Fatalf("Failed to return the balance %v %v", fetchBalance, err)
 						}
 
-						balance := ethutil.ToDecimal(fetchBalance, 18)
+						// Converts the amount from wei to a decimal
+						// From Ne18 to N.0
+						ethBalance := ethutil.ToDecimal(fetchBalance, 18)
 
-						balanceMessage := fmt.Sprintf("The ETH balance of %v is: %v %v", address, balance, "ETH")
+						// Builds the balance message as a string by taking in address, ethBalance, and "ETH"
+						balanceMessage := fmt.Sprintf("The ETH balance of %v is: %v %v", address, ethBalance, "ETH")
 
+						// Prints the balance message
 						fmt.Println(balanceMessage)
 					}
+
 					return nil
 				},
 			},

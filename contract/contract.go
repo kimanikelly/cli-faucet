@@ -62,7 +62,7 @@ func ContractInstance() *Token {
 		log.Fatalf("Failed to connect to the Ethereum client: %v", err)
 	}
 
-	token, err := NewToken(common.HexToAddress("0x0DCd1Bf9A1b36cE34237eEaFef220932846BCD82"), Connection())
+	token, err := NewToken(common.HexToAddress("0x0DCd1Bf9A1b36cE34237eEaFef220932846BCD82"), ProviderConnection())
 
 	if err != nil {
 		log.Fatalf("Failed to instantiate a Token contract: %v", err)

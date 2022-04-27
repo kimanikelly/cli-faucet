@@ -6,16 +6,18 @@ import (
 	"github.com/ethereum/go-ethereum/ethclient"
 )
 
-func Connection() *ethclient.Client {
+// Connects to the provider and returns the instance
+func ProviderConnection() *ethclient.Client {
+
+	// Connects to the provider and creates the client instance
 	client, err := ethclient.Dial("http://localhost:8545")
 
-	// If err does not equal nil(zero value) throw an error and exit the process
-	// The "Failed to connect to the Ethereum client: %v" will only log if there is an error
-	// connecting to the Ethereum provider
+	// If err does not equal nil(zero value) throw an error and exit
 	if err != nil {
 		log.Fatalf("Failed to connect to the Ethereum client: %v", err)
 	}
 
+	// Returns the client instance
 	return client
 
 }
