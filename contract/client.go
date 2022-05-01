@@ -10,7 +10,7 @@ import (
 func ProviderConnection() *ethclient.Client {
 
 	// Connects to the provider and creates the client instance
-	client, err := ethclient.Dial("http://localhost:8545")
+	client, err := ethclient.Dial(LoadEnvironment())
 
 	// If err does not equal nil(zero value) throw an error and exit
 	if err != nil {

@@ -29,6 +29,7 @@ var TokenAddress string
 // Creates and returns the Token.sol contract instance
 func ContractInstance() *Token {
 
+	// Loads the environment variables from the .env file
 	err := godotenv.Load()
 
 	// If err does not equal nil(zero value) throw an error and exit the process
@@ -53,9 +54,6 @@ func ContractInstance() *Token {
 
 	// TokenAddress is assigned the value of the Rinkeby address stored in the ContractData struct
 	TokenAddress = ContractData.Addresses.Rinkeby
-
-	// rinkebyUrl is assigned the value of the RINKEBY_URL environment variable
-	// rinkebyUrl := os.Getenv("RINKEBY_URL")
 
 	// If err does not equal nil(zero value) throw an error and exit the process
 	if err != nil {
