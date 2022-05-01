@@ -4,4 +4,4 @@
 ./main ContractBalance
 ```
 
-![Contract Balance Command](docs/contractBalance.png)
+![Contract Balance Command](contractBalance.png)

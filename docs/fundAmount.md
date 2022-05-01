@@ -6,4 +6,4 @@ Run the command
 ./main FundAmount
 ```
 
-![Fund Amount Command](docs/fundAmount.png)
+![Fund Amount Command](fundAmount.png)

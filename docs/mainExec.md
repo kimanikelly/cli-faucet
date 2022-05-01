@@ -6,4 +6,4 @@ Run the command
 ./main
 ```
 
-![Main Executable](docs/mainExec.png)
+![Main Executable](mainExec.png)
