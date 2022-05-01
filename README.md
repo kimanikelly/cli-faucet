@@ -39,3 +39,5 @@ touch .env
 - [FundAmount](docs/fundAmount.md)
 
 - [ContractBalance](docs/contractBalance.md)
+
+- [BalanceOf](docs/balanceOf.md)
