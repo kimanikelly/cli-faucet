@@ -2,7 +2,6 @@ package app
 
 import (
 	"cli-faucet/contract"
-	"cli-faucet/database"
 	"cli-faucet/signer"
 	"context"
 	"fmt"
@@ -98,7 +97,7 @@ func StartApp() {
 					// From Ne18 to N.0
 					fundAmount := ethutil.ToDecimal(fetchFundAmount, 18)
 
-					// Buils the fund amount message as a string by taking in fundAmount and tokenSymbol as args
+					// Builds the fund amount message as a string by taking in fundAmount and tokenSymbol as args
 					fundAmtMessage := fmt.Sprintf("The fund amount is: %v %v ", fundAmount, tokenSymbol)
 
 					// Prints the fundAmount message
@@ -114,7 +113,7 @@ func StartApp() {
 
 					// Returns the amount of Test Tokens Token.sol holds in the contract
 					// Returns the amount as a wei value Ne18
-					fetchContractBalance, err := token.BalanceOf(&bind.CallOpts{}, common.HexToAddress("0x0DCd1Bf9A1b36cE34237eEaFef220932846BCD82"))
+					fetchContractBalance, err := token.BalanceOf(&bind.CallOpts{}, common.HexToAddress(contract.TokenAddress))
 
 					// If err does not equal nil(zero value) throw an error
 					if err != nil {
@@ -236,16 +235,16 @@ func StartApp() {
 					amountFunded := ethutil.ToDecimal(fetchAmountFunded, 18)
 
 					// Builds the string to insert the FundAccount transaction values into the recipients MySQL table
-					insertFundAccountStr := fmt.Sprintf(
-						"INSERT INTO recipients VALUES ('%v', %v, CURRENT_TIMESTAMP())", signerAddress, amountFunded)
+					// insertFundAccountStr := fmt.Sprintf(
+					// 	"INSERT INTO recipients VALUES ('%v', %v, CURRENT_TIMESTAMP())", signerAddress, amountFunded)
 
 					// Inserts the FundAccount transaction values into the recipients MySQL table
-					insertFundAccount, err := database.Connection().Query(insertFundAccountStr)
+					// insertFundAccount, err := database.Connection().Query(insertFundAccountStr)
 
 					// If err does not equal nil(zero value) throw an error
-					if err != nil {
-						log.Fatalf("Failed to insert the FundAccount transaction values into the recipients MySQL table %v", err)
-					}
+					// if err != nil {
+					// 	log.Fatalf("Failed to insert the FundAccount transaction values into the recipients MySQL table %v", err)
+					// }
 
 					// Message logs the connected signers address and how many Test Tokens were transferred
 					amountFundedMessage := fmt.Sprintf("%v was funded: %v %v", signerAddress, amountFunded, tokenSymbol)
@@ -260,7 +259,7 @@ func StartApp() {
 					fmt.Println("\nTransaction Hash:", txHash)
 
 					// Closes the recipients table at the end of the FundAccount CLI command
-					defer insertFundAccount.Close()
+					// defer insertFundAccount.Close()
 
 					return nil
 				},

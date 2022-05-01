@@ -11,7 +11,6 @@ import (
 	"github.com/joho/godotenv"
 )
 
-// Stores the UnMarshalled address of Token.sol
 type AddressList struct {
 	Rinkeby string
 }
@@ -20,7 +19,6 @@ type ContractResponseData struct {
 	Addresses AddressList
 }
 
-//
 var ContractData ContractResponseData
 
 // The deployed Token.sol address on the Rinkeby testnet
@@ -61,7 +59,7 @@ func ContractInstance() *Token {
 	}
 
 	// Creates the Token.sol contract instance
-	token, err := NewToken(common.HexToAddress("0x0DCd1Bf9A1b36cE34237eEaFef220932846BCD82"), ProviderConnection())
+	token, err := NewToken(common.HexToAddress(TokenAddress), ProviderConnection())
 
 	// If err does not equal nil(zero value) throw an error and exit the process
 	if err != nil {
