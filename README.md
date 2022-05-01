@@ -32,6 +32,12 @@ touch .env
 
 - Set the `ENVIRONMENT` to the string Rinkeby.
 
+## Receive Rinkeby ETH for CLI transactions.
+
+This faucet deposits 0.1 Rinkeby ETH to a wallet.
+
+https://rinkebyfaucet.com/
+
 ## CLI Commands
 
 - [Main Executable](docs/mainExec.md)
@@ -41,3 +47,5 @@ touch .env
 - [ContractBalance](docs/contractBalance.md)
 
 - [BalanceOf](docs/balanceOf.md)
+
+- [EthBalanceOf](docs/ethBalanceOf.md)
