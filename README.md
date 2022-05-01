@@ -34,30 +34,8 @@ touch .env
 
 ## CLI Commands
 
-### Verify installation & setup with the `./main` executable.
+- [Main Executable](docs/mainExec.md)
 
-Run the command
+- [FundAmount](docs/fundAmount.md)
 
-```
-./main
-```
-
-![Main Executable](docs/mainExec.png)
-
-### View the amount of TEST TOKENS a connected wallet will receive.
-
-Run the command
-
-```
-./main FundAmount
-```
-
-![Fund Amount Command](docs/fundAmount.png)
-
-### View the amount of TEST TOKENS Token.sol holds in the contract.
-
-```
-./main ContractBalance
-```
-
-![Contract Balance Command](docs/contractBalance.png)
+- [ContractBalance](docs/contractBalance.md)
