@@ -31,3 +31,15 @@ touch .env
 - Set the `PRIVATE_KEY` to your valid Ethereum Wallet private key.
 
 - Set the `ENVIRONMENT` to the string Rinkeby.
+
+## CLI Commands
+
+### Verify installation & setup with the `./main` executable.
+
+Run the command
+
+```
+./main
+```
+
+![Drag Racing](docs/mainExec.png)
