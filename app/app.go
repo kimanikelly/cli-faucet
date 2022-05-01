@@ -126,7 +126,7 @@ func StartApp() {
 					contractBalance := ethutil.ToDecimal(fetchContractBalance, 18)
 
 					// Builds the contract balance message as a string by taking in the contractBalance and tokenSymbol as args
-					contractBalMessage := fmt.Sprintf("The TT contract balance is: %v %v", contractBalance, tokenSymbol)
+					contractBalMessage := fmt.Sprintf("The contract balance is: %v %v", contractBalance, tokenSymbol)
 
 					// Prints the contract balance message
 					fmt.Println(contractBalMessage)
