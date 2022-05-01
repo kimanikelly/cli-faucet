@@ -53,3 +53,7 @@ Run the command
 ```
 
 ![Fund Amount Command](docs/fundAmount.png)
+
+### View the amount of TEST TOKENS Token.sol holds in the contract.
+
+![Contract Balance Command](docs/contractBalance.png)
