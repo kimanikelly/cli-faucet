@@ -42,4 +42,14 @@ Run the command
 ./main
 ```
 
-![Drag Racing](docs/mainExec.png)
+![Main Executable](docs/mainExec.png)
+
+### View the amount of TEST TOKENS a connected wallet will receive.
+
+Run the command
+
+```
+./main FundAmount
+```
+
+![Fund Amount Command](docs/fundAmount.png)
