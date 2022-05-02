@@ -55,3 +55,7 @@ https://rinkebyfaucet.com/
 ## MetaMask Configuration
 
 - [How to import TEST TOKENS](docs/metamask.md)
+
+## Features to Add
+
+- Integrate the MySQL Database
