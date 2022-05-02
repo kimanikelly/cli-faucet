@@ -49,3 +49,5 @@ https://rinkebyfaucet.com/
 - [BalanceOf](docs/balanceOf.md)
 
 - [EthBalanceOf](docs/ethBalanceOf.md)
+
+- [FundAccount](docs/fundAccount.md)
