@@ -1,6 +1,10 @@
 ## View your TEST TOKEN wallet amount after the FundAccount command is called
 
-Token.sol Address (Rinkeby Testnet) - 0x1F3839Dde4C058DfB8989b9D341491905FB46ddD
+Token.sol Address (Rinkeby Testnet)
+
+```
+0x1F3839Dde4C058DfB8989b9D341491905FB46ddD
+```
 
 ### Open MetaMask and switch to Rinkeby Testnet in the browser
 
