@@ -2,7 +2,7 @@
 
 [![Go](https://github.com/kimanikelly/cli-faucet/actions/workflows/go.yml/badge.svg)](https://github.com/kimanikelly/cli-faucet/actions/workflows/go.yml)
 
-## Token.sol on Etherscan ( Rinkeby Testnet)
+## Token.sol on Etherscan (Rinkeby Testnet)
 
 - https://rinkeby.etherscan.io/address/0x1f3839dde4c058dfb8989b9d341491905fb46ddd
 
@@ -51,3 +51,7 @@ https://rinkebyfaucet.com/
 - [EthBalanceOf](docs/ethBalanceOf.md)
 
 - [FundAccount](docs/fundAccount.md)
+
+## MetaMask Configuration
+
+- [How to import TEST TOKENS](docs/metamask.md)
