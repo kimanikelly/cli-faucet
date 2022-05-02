@@ -12,6 +12,12 @@
 
 ## Installation & Setup
 
+### Install Go
+
+Install, Go for your OS if it hasn't already be installed
+
+https://go.dev/doc/install
+
 ### Git clone the repository
 
 ```
