@@ -65,3 +65,4 @@ https://rinkebyfaucet.com/
 ## Features to Add
 
 - Integrate the MySQL Database
+- Containerize the application through Docker for an easier installation process
