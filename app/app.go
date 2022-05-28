@@ -1,13 +1,14 @@
 package app
 
 import (
-	"cli-faucet/contract"
-	"cli-faucet/signer"
 	"context"
 	"fmt"
 	"log"
 	"math/big"
 	"os"
+
+	"github.com/kimanikelly/cli-faucet/contract"
+	"github.com/kimanikelly/cli-faucet/signer"
 
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
