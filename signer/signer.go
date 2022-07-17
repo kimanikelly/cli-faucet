@@ -3,7 +3,6 @@ package signer
 import (
 	"crypto/ecdsa"
 	"log"
-	"os"
 
 	"github.com/joho/godotenv"
 
@@ -19,7 +18,7 @@ func Account() (common.Address, *ecdsa.PrivateKey) {
 		log.Fatalf("Failed to load the .env file %v", err)
 	}
 
-	privateKey, err := crypto.HexToECDSA(os.Getenv("PRIVATE_KEY"))
+	privateKey, err := crypto.GenerateKey()
 
 	if err != nil {
 		log.Fatalf("Failed to parse the private key %v", err)
