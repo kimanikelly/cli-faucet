@@ -16,7 +16,7 @@ import (
 )
 
 // Starts the CLI Faucet
-func StartApp() {
+func Start() {
 
 	// Returns the Token.sol contract instance
 	token := contract.ContractInstance()
