@@ -1,4 +1,4 @@
-module cli-faucet
+module github.com/kimanikelly/cli-faucet
 
 go 1.18
 
